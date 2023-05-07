@@ -6,6 +6,8 @@ import { SelectBar } from "../../components/select-bar";
 import { ShowingBar } from "../../components/showing-bar";
 import { MainPageWrapper, HeaderWrapper } from "./styles";
 import socketIOClient from "socket.io-client";
+import { useSwipeable } from "react-swipeable";
+import { useMediaQuery } from "react-responsive";
 
 export const MainPage = () => {
   const [selectedConversation, setSelectedConversation] = useState([]);
@@ -21,9 +23,17 @@ export const MainPage = () => {
   const [loadingSelectState, setLoadingSelectState] = useState(true);
   const [loadingShowingState, setLoadingShowingState] = useState(false);
   const [validationSwitch, setValidationSwitch] = useState(true);
+  const [activeScreen, setActiveScreen] = useState("LEFT");
 
   const protocol = process.env.REACT_APP_PROTOCOL;
   const hostingUrl = process.env.REACT_APP_HOSTING_URL;
+
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
+  const handlers = useSwipeable({
+    onSwipedLeft: (eventData) => isTabletOrMobile && setActiveScreen("RIGHT"),
+    onSwipedRight: (eventData) => isTabletOrMobile && setActiveScreen("LEFT"),
+  });
 
   useEffect(() => {
     const socket = socketIOClient(`${protocol}://${hostingUrl}`);
@@ -35,7 +45,7 @@ export const MainPage = () => {
 
   return (
     <>
-      <MainPageWrapper>
+      <MainPageWrapper {...handlers}>
         <HeaderWrapper>
           <div
             style={{
@@ -83,30 +93,37 @@ export const MainPage = () => {
           </>
         </HeaderWrapper>
         <div style={{ display: "flex" }}>
-          <SelectBar
-            selectedConversation={selectedConversation}
-            setSelectedConversation={setSelectedConversation}
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
-            sortingState={sortingState}
-            fetchApiToggler={fetchApiToggler}
-            loadingSelectState={loadingSelectState}
-            setLoadingSelectState={setLoadingSelectState}
-            loadingShowingState={loadingShowingState}
-            setLoadingShowingState={setLoadingShowingState}
-          />
-          <ShowingBar
-            selectedConversation={selectedConversation}
-            setSelectedConversation={setSelectedConversation}
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
-            fetchApiToggler={fetchApiToggler}
-            loadingSelectState={loadingSelectState}
-            setLoadingSelectState={setLoadingSelectState}
-            loadingShowingState={loadingShowingState}
-            setLoadingShowingState={setLoadingShowingState}
-            validationSwitch={validationSwitch}
-          />
+          {(!isTabletOrMobile ||
+            (isTabletOrMobile && activeScreen === "LEFT")) && (
+            <SelectBar
+              selectedConversation={selectedConversation}
+              setSelectedConversation={setSelectedConversation}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+              sortingState={sortingState}
+              fetchApiToggler={fetchApiToggler}
+              loadingSelectState={loadingSelectState}
+              setLoadingSelectState={setLoadingSelectState}
+              loadingShowingState={loadingShowingState}
+              setLoadingShowingState={setLoadingShowingState}
+              setActiveScreen={setActiveScreen}
+            />
+          )}
+          {(!isTabletOrMobile ||
+            (isTabletOrMobile && activeScreen === "RIGHT")) && (
+            <ShowingBar
+              selectedConversation={selectedConversation}
+              setSelectedConversation={setSelectedConversation}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+              fetchApiToggler={fetchApiToggler}
+              loadingSelectState={loadingSelectState}
+              setLoadingSelectState={setLoadingSelectState}
+              loadingShowingState={loadingShowingState}
+              setLoadingShowingState={setLoadingShowingState}
+              validationSwitch={validationSwitch}
+            />
+          )}
         </div>
       </MainPageWrapper>
     </>

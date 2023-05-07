@@ -8,10 +8,16 @@ export const SelectBarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 35vw;
+  @media only screen and (max-width: 1224px) {
+    width: 100vw;
+  }
+  @media only screen and (min-width: 1224px) {
+    width: 35vw;
+  }
   height: calc(100vh - 100px);
   background-color: #ad8f00;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   direction: rtl;
   border-top: solid 1px black;
 `;

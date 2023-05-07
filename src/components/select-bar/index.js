@@ -24,6 +24,7 @@ export const SelectBar = ({
   setLoadingSelectState,
   loadingShowingState,
   setLoadingShowingState,
+  setActiveScreen,
 }) => {
   const [conversationsList, setConversationsList] = useState([]);
   const [numberOfDbResults, setNumberOfDbResults] = useState(0);
@@ -92,6 +93,7 @@ export const SelectBar = ({
                 key={item._id}
                 onClick={() => {
                   setLoadingShowingState(true);
+                  setActiveScreen("RIGHT");
                   setSelectedId({
                     id: item._id,
                     personOne: item.personOne,

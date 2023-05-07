@@ -1,8 +1,16 @@
 import styled from "styled-components";
 
 export const ShowingBarWrapper = styled.div`
-  width: 65vw;
+  @media only screen and (max-width: 1224px) {
+    width: 100vw;
+  }
+  @media only screen and (min-width: 1224px) {
+    width: 65vw;
+  }
   height: calc(100vh - 100px);
+  @media only screen and (max-width: 1224px) {
+    height: calc(100vh - 50px);
+  }
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #f0f0f0;
@@ -37,6 +45,9 @@ export const ShowingBarContentWrapper = styled.div`
 
 export const SendMessageBarWrapper = styled.div`
   display: flex;
+  @media only screen and (max-width: 1224px) {
+    display: none;
+  }
   justify-content: center;
   align-content: center;
   background-color: #ecb800;
