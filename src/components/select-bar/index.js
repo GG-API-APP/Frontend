@@ -8,8 +8,10 @@ import {
 import axios from "axios";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { Pagination } from "antd";
-import hotIcon from "../../assets/icons/hot.png";
+import { Pagination, Tooltip } from "antd";
+import fireIcon1 from "../../assets/icons/fire1.png";
+import fireIcon2 from "../../assets/icons/fire2.png";
+import fireIcon3 from "../../assets/icons/fire3.png";
 
 export const SelectBar = ({
   selectedId,
@@ -176,15 +178,27 @@ export const SelectBar = ({
                     style={{ display: "flex", flexDirection: "row-reverse" }}
                   >
                     <div>{`Wymienili ${item.__v} wiadomości`}</div>
-                    {/* <img
-                      src={hotIcon}
-                      alt="hot icon"
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        marginLeft: "8px",
-                      }}
-                    /> */}
+                    {item.hotPoints >= 10 ? (
+                      <Tooltip title={`${item.hotPoints} hot points!`}>
+                        <img
+                          src={
+                            item.hotPoints >= 10 && item.hotPoints < 50
+                              ? fireIcon1
+                              : item.hotPoints >= 50 && item.hotPoints < 100
+                              ? fireIcon2
+                              : item.hotPoints >= 100
+                              ? fireIcon3
+                              : undefined
+                          }
+                          alt="fire icon"
+                          style={{
+                            width: "20px",
+                            height: "20px",
+                            marginLeft: "8px",
+                          }}
+                        />
+                      </Tooltip>
+                    ) : undefined}
                   </div>
                 </div>
 
