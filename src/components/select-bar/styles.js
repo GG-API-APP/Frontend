@@ -15,7 +15,7 @@ export const SelectBarWrapper = styled.div`
     width: 35vw;
   }
   height: calc(100vh - 100px);
-  background-color: #ad8f00;
+  background-color: ${(props) => (props.dark && "#00104b") || "#ad8f00"};
   overflow-y: auto;
   overflow-x: hidden;
   direction: rtl;

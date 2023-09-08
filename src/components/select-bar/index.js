@@ -25,6 +25,7 @@ export const SelectBar = ({
   loadingShowingState,
   setLoadingShowingState,
   setActiveScreen,
+  darkModeSwitch,
 }) => {
   const [conversationsList, setConversationsList] = useState([]);
   const [numberOfDbResults, setNumberOfDbResults] = useState(0);
@@ -66,7 +67,7 @@ export const SelectBar = ({
 
   return (
     <div>
-      <SelectBarWrapper>
+      <SelectBarWrapper dark={darkModeSwitch}>
         {loadingSelectState ? (
           <div
             style={{
@@ -102,8 +103,24 @@ export const SelectBar = ({
                     personTwoDetails: item.personTwoDetails,
                   });
                 }}
-                cardColor={item._id === selectedId.id ? "#1360e8" : "#ecb800"}
-                borderColor={item._id === selectedId.id ? "red" : "#ecb800"}
+                cardColor={
+                  darkModeSwitch
+                    ? item._id === selectedId.id
+                      ? "#3e84ff"
+                      : "#001769"
+                    : item._id === selectedId.id
+                    ? "#1360e8"
+                    : "#ecb800"
+                }
+                borderColor={
+                  darkModeSwitch
+                    ? item._id === selectedId.id
+                      ? "yellow"
+                      : "#001769"
+                    : item._id === selectedId.id
+                    ? "red"
+                    : "#ecb800"
+                }
               >
                 <div className="tooltip">
                   <span

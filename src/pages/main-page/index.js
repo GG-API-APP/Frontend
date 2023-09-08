@@ -23,6 +23,7 @@ export const MainPage = () => {
   const [loadingSelectState, setLoadingSelectState] = useState(true);
   const [loadingShowingState, setLoadingShowingState] = useState(false);
   const [validationSwitch, setValidationSwitch] = useState(true);
+  const [darkModeSwitch, setDarkModeSwitch] = useState(false);
   const [activeScreen, setActiveScreen] = useState("LEFT");
 
   const protocol = process.env.REACT_APP_PROTOCOL;
@@ -46,16 +47,36 @@ export const MainPage = () => {
   return (
     <>
       <MainPageWrapper {...handlers}>
-        <HeaderWrapper>
+        <HeaderWrapper dark={darkModeSwitch}>
           <div
             style={{
               display: "flex",
             }}
           >
-            <div style={{ paddingRight: "10px" }}>Alternatywne wiadomości</div>
+            <div
+              style={{
+                paddingRight: "10px",
+                color: darkModeSwitch ? "white" : "black",
+              }}
+            >
+              Alternatywne wiadomości
+            </div>
             <Switch
               checked={validationSwitch}
               onChange={() => setValidationSwitch((prev) => !prev)}
+            />
+            <div
+              style={{
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                color: darkModeSwitch ? "white" : "black",
+              }}
+            >
+              Dark Mode
+            </div>
+            <Switch
+              checked={darkModeSwitch}
+              onChange={() => setDarkModeSwitch((prev) => !prev)}
             />
           </div>
           <>
@@ -107,6 +128,7 @@ export const MainPage = () => {
               loadingShowingState={loadingShowingState}
               setLoadingShowingState={setLoadingShowingState}
               setActiveScreen={setActiveScreen}
+              darkModeSwitch={darkModeSwitch}
             />
           )}
           {(!isTabletOrMobile ||
@@ -122,6 +144,7 @@ export const MainPage = () => {
               loadingShowingState={loadingShowingState}
               setLoadingShowingState={setLoadingShowingState}
               validationSwitch={validationSwitch}
+              darkModeSwitch={darkModeSwitch}
             />
           )}
         </div>
